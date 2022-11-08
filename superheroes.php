@@ -63,10 +63,34 @@ $superheroes = [
   ], 
 ];
 
-?>
+$emptyA = [];
 
-<ul>
-<?php foreach ($superheroes as $superhero): ?>
-  <li><?= $superhero['alias']; ?></li>
-<?php endforeach; ?>
-</ul>
+$b = $_REQUEST["b"];
+$name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING);
+
+if ($b !== ""){
+
+    $b = strtolower($b);
+    
+
+    foreach($superheroes as $superhero){
+
+        $alias = strtolower($superhero["alias"]);
+        $name = strtolower($superhero["name"]);
+        if ( $b === $alias  || $b === $name ){
+            $emptyA = $superhero;
+        }
+    }
+    echo $emptyA === []? json_encode("Superhero Not Found") : json_encode($emptyA); 
+}else {
+        
+        echo "<ul>";
+        foreach ($superheroes as $superhero){
+        echo "<li>".$superhero["alias"]."</li>";
+        }
+        echo "</ul>";
+
+}
+
+
+?>
